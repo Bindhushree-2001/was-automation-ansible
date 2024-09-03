@@ -1,0 +1,6 @@
+---
+profile_name: "Dmgr01"
+was_user: "wasadmin"
+dmgr_bin: "/opt/IBM/WebSphere/AppServer/profiles/{{ profile_name }}/bin"
+dmgr_pid_file: "/opt/IBM/WebSphere/AppServer/profiles/{{ profile_name }}/logs/dmgr/dmgr.pid"
+dmgr_pots: 8879

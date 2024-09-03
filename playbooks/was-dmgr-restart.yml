@@ -1,0 +1,27 @@
+---
+- name: Restart websphere deployment manager
+  hosts: dmgr_servers
+  become: yes
+  tasks:
+
+
+    - name: Stop WebSphere Deployment manager
+      command: "{{dmgr_bin}}/stopManager.sh -profileName {{ profile_name }}"
+      become_user: "{{ was_user }}"
+      ignore_errors: yes
+
+    - name: Wait for the Deployment Manager to stop
+      wait_for:
+        path: "{{ dmgr_pid_file }}"
+        state: absent
+        timeout: 300
+
+    - name: Start WebSphere Deployment manager
+      command: "{{ dmgr_bin }}/startManager.sh -profileName {{ profile_name }}"
+      become_user: "{{ was_user }}"
+
+    - name: Wait for the Deployment Manager to start
+      wait_for:
+        port: "{{ dmgr_port }}"
+        timeout: 300
+        state: started
